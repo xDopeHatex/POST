@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../dist/output.css" rel="stylesheet" />
+    <script src="../JS/script.js" defer></script>
+  </head>
+  <body class="bg-slate-100">
+    <!-- Wrapper -->
+
+    <div class="py-5 h-screen">
+      <!-- Main Container -->
+      <section
+        class="max-w-2xl max-h-[95vh] space-y-5 p-6 rounded-xl bg-gradient-to-r from-teal-400 via-sky-400 to-indigo-400 mx-auto flex flex-col py-5 shadow-2xl shadow-cyan-700"
+      >
+        <!-- My Twitter container -->
+        <header class="flex justify-between items-center">
+          <h1 class="font-bold text-3xl text-white">My Twitter</h1>
+        </header>
+        <!-- Input and Submit and Selector -->
+        <form
+          id="task-form"
+          class="flex items-center justify-between space-x-3 mb-8"
+        >
+          <!-- Input and Submit -->
+          <div
+            class="flex justify-between items-center rounded-xl bg-white p-3 w-full space-x-3 group"
+          >
+            <input
+              type="text"
+              name="task-input"
+              id="task-input"
+              class="w-full"
+              placeholder="You can always write your post here"
+            />
+          </div>
+          <!-- Add Post Button -->
+
+          <button
+            id="btn-add"
+            type="submit"
+            class="select px-6 py-3 rounded-xl text-white font-bold bg-pink-500 hover:bg-pink-400 hover:shadow-xl transition-all duration-300 space-x-4 w-[10rem] active:bg-pink-600 active:translate-y-0.5"
+          >
+            <p>Add Post</p>
+          </button>
+        </form>
+        <!--  Container -->
+        <ul
+          id="1"
+          class="collection flex flex-col rounded-xl space-y-3 overflow-y-auto pr-4 min-h-[20rem] p-3 shadow-inner shadow-slate-500"
+        >
+          <li
+            class="flex items-center rounded-xl justify-between p-3 group bg-white"
+          >
+          <div class="flex space-x-2">
+            <label class="flex space-x-2 items-center"
+              ><form class="flex space-x-2" type="submit" id="reductForm"><input class="bg-slate-200" type="text" name="text" id="reductText" value="${currentTask.body}"/></form></label
+            >
+          </div>
+          <div id="3" class="flex gap-4">
+          
+            <button
+            id="2.7"
+            class="done-item flex items-center justify-center h-6 w-6 z-0 type="submit"
+          >
+            <img
+              src="../img/done.svg"
+              id="1.7"
+              class="group-hover:scale-100 bg-pink-300 rounded-md scale-0 z-0 transition-all duration-200 d active:bg-pink-600 active:translate-y-0.5 "
+              alt=""
+            />
+          </button>
+            <button class="delete-item flex items-center justify-center h-6 w-6 z-0">
+              <img
+                src="../img/delete.svg"
+                class=" group-hover:scale-100 bg-pink-300 rounded-md scale-0 z-0 transition-all duration-200 d active:bg-pink-600 active:translate-y-0.5 "
+                alt=""
+              />
+            </button>
+          </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
