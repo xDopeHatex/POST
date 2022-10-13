@@ -7,6 +7,13 @@ const getRandom = function () {
 // Add storage
 let store = [];
 
+//textarea
+
+function adjustHeight(el) {
+  el.style.height =
+    el.scrollHeight > el.clientHeight ? el.scrollHeight + "px" : "48px";
+}
+
 //Vars
 
 const form = document.querySelector("#task-form");
@@ -27,12 +34,10 @@ async function getPostsFromServer() {
     };
   });
   store?.forEach((post) => {
-    template(post);
+    templateLiElemForAdd(post);
   });
-  console.log(store[0]);
-  console.log(store[1]);
 }
-//getPostsFromServer();
+getPostsFromServer();
 
 // Creating templates
 
@@ -40,7 +45,7 @@ const templateLiElemForAdd = function (rawAddPost) {
   // Create li element
   const li = document.createElement("li");
   // Add class
-  li.className = `flex items-center rounded-xl justify-between p-3 group bg-white`;
+  li.className = `flex items-center rounded-xl justify-between p-3 group bg-white shadow-slate-500 shadow-xl space-x-8 `;
 
   //Add id
 
@@ -78,8 +83,6 @@ const templateLiElemForAdd = function (rawAddPost) {
   taskList.insertBefore(li, theFirstChild);
 };
 
-const templateLiElemForStartingRedaction = function (rawAddPost) {};
-
 // Add task event
 
 form.addEventListener("submit", addPostToStore);
@@ -108,6 +111,7 @@ async function addPostToStore(e) {
     let rawAddPost = await response.json();
     // Random Id
 
+    console.log(rawAddPost);
     const d = new Date();
     let ms = d.valueOf();
     rawAddPost.innerId = `${ms}`;
@@ -117,6 +121,8 @@ async function addPostToStore(e) {
     console.log(store.length);
 
     store.splice(store.length, 0, rawAddPost);
+
+    localStorage.setItem("store", JSON.stringify());
 
     templateLiElemForAdd(rawAddPost);
 
@@ -169,32 +175,32 @@ function reductTask(e) {
 
     li.innerHTML = "";
 
-    li.innerHTML = `<div class="flex space-x-2">
-    <label class="flex space-x-2 items-center"
-      ><form class="flex space-x-2" type="submit" id="reductForm"><input class="bg-slate-200" type="text" name="text" id="reductText" value="${currentTask.body}"/></form></label
+    li.innerHTML = `<div class="flex space-x-2 grow-[1] h-full">
+      <label class="flex space-x-2 items-center grow-[1] h-full"
+        ><form class="flex space-x-2 grow-[1] h-full" type="submit" id="reductForm"><textarea onMouseOver="adjustHeight(this)" onMouseOut="adjustHeight(this)" class="bg-slate-200 h-full grow-[1] overflow-hidden" type="text" name="text" id="reductText">${currentTask.body}</textarea></form></label
+      >
+    </div>
+    <div id="3" class="flex gap-4 ">
+    
+      <button
+      id="2.7"
+      class="done-item flex items-center justify-center h-6 w-6 z-0 type="submit"
     >
-  </div>
-  <div id="3" class="flex gap-4">
-  
-    <button
-    id="2.7"
-    class="done-item flex items-center justify-center h-6 w-6 z-0 type="submit"
-  >
-    <img
-      src="../img/done.svg"
-      id="1.7"
-      class="group-hover:scale-100 bg-pink-300 rounded-md scale-0 z-0 transition-all duration-200 d active:bg-pink-600 active:translate-y-0.5 "
-      alt=""
-    />
-  </button>
-    <button class="delete-item flex items-center justify-center h-6 w-6 z-0">
       <img
-        src="../img/delete.svg"
-        class=" group-hover:scale-100 bg-pink-300 rounded-md scale-0 z-0 transition-all duration-200 d active:bg-pink-600 active:translate-y-0.5 "
+        src="../img/done.svg"
+        id="1.7"
+        class="group-hover:scale-100 bg-pink-300 rounded-md scale-0 z-0 transition-all duration-200 d active:bg-pink-600 active:translate-y-0.5 "
         alt=""
       />
     </button>
-  </div>`;
+      <button class="delete-item flex items-center justify-center h-6 w-6 z-0">
+        <img
+          src="../img/delete.svg"
+          class=" group-hover:scale-100 bg-pink-300 rounded-md scale-0 z-0 transition-all duration-200 d active:bg-pink-600 active:translate-y-0.5 "
+          alt=""
+        />
+      </button>
+    </div>`;
 
     e.preventDefault();
   }
@@ -228,6 +234,8 @@ async function doneTask(e) {
     const post = await response.json();
 
     console.log(post);
+
+    currentTask.body = post.body;
 
     let li = document.getElementById(`${id}`);
 
